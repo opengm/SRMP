@@ -89,8 +89,8 @@
 	deallocated only when the destructor is called.
 */
 
-#ifndef __BLOCK_H__
-#define __BLOCK_H__
+#ifndef SRMP___BLOCK_H__
+#define SRMP___BLOCK_H__
 
 #include <stdlib.h>
 

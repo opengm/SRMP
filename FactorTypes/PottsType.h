@@ -80,8 +80,8 @@ int main(int argc, char* argv[])
 */
 
 
-#ifndef NLAGNKLAJSNFRKAJSGKAS
-#define NLAGNKLAJSNFRKAJSGKAS
+#ifndef SRMP_NLAGNKLAJSNFRKAJSGKAS
+#define SRMP_NLAGNKLAJSNFRKAJSGKAS
 
 #include "../SRMP.h"
 

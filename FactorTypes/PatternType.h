@@ -99,8 +99,8 @@ int main(int argc, char* argv[])
 */
 
 
-#ifndef FUAHNGIUAGKAFASJGASG
-#define FUAHNGIUAGKAFASJGASG
+#ifndef SRMP_FUAHNGIUAGKAFASJGASG
+#define SRMP_FUAHNGIUAGKAFASJGASG
 
 #include "../SRMP.h"
 

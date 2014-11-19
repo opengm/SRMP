@@ -19,8 +19,8 @@
     along with SRMP.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KJANJDSKFNAJSFJASFNAKSJFANBSJF
-#define KJANJDSKFNAJSFJASFNAKSJFANBSJF
+#ifndef SRMP_KJANJDSKFNAJSFJASFNAKSJFANBSJF
+#define SRMP_KJANJDSKFNAJSFJASFNAKSJFANBSJF
 
 #include "../SRMP.h"
 

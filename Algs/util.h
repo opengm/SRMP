@@ -1,5 +1,5 @@
-#ifndef GHAODJFNADJGHAJSD
-#define GHAODJFNADJGHAJSD
+#ifndef SRMP_GHAODJFNADJGHAJSD
+#define SRMP_GHAODJFNADJGHAJSD
 
 
 // sorts arr[left..right]

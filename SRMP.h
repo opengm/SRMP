@@ -26,8 +26,8 @@
    Hopefully, the usage should be self-explanatory. For concrete examples see FactorTypes/PottsType.h and FactorTypes/SharedPairwiseType.h.
 */
 
-#ifndef FNAIJDGAKSJDBAJFGBASFJAS
-#define FNAIJDGAKSJDBAJFGBASFJAS
+#ifndef SRMP_FNAIJDGAKSJDBAJFGBASFJAS
+#define SRMP_FNAIJDGAKSJDBAJFGBASFJAS
 
 #include <string.h>
 #include <assert.h>

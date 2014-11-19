@@ -19,8 +19,8 @@
     along with SRMP.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LAKSJFLAKSFLAKSFJNALSFFAISF
-#define LAKSJFLAKSFLAKSFJNALSFFAISF
+#ifndef SRMP_LAKSJFLAKSFLAKSFJNALSFFAISF
+#define SRMP_LAKSJFLAKSFLAKSFJNALSFFAISF
 
 #include "../SRMP.h"
 
