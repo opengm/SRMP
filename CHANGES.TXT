@@ -1,0 +1,3 @@
+CHANGES FROM VERSION 1.0:
+
+- Fixed a bug: if SRMP was called after calling some algorithm then weights could habe been computed incorrectly.
