@@ -25,6 +25,8 @@
 
 #include "../SRMP.h"
 
+namespace srmpLib {
+
 // for the description of member functions see SRMP.h, structure FactorType
 
 struct GeneralFactorType : Energy::FactorType
@@ -53,5 +55,5 @@ private:
 	ReusableBuffer rbuf;
 };
 
-
+} // namespace srmpLib
 #endif

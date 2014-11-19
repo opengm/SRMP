@@ -19,6 +19,7 @@
 #include <assert.h>
 #include "GeneralType.h"
 
+using namespace srmpLib;
 
 GeneralFactorType::GeneralFactorType() 
 	: buf(4096)

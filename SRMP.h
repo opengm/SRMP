@@ -34,6 +34,8 @@
 #include "Algs/block.h"
 #include "Algs/timer.h"
 
+namespace srmpLib {
+
 //#define SRMP_VNK_DEBUG
 
 
@@ -538,5 +540,6 @@ inline int Energy::CompareFactorsX(Factor* A, Factor* B)
 
 #endif
 
+} // namespace srmpLib
 #endif
 

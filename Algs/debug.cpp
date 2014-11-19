@@ -24,7 +24,7 @@
 #include "../SRMP.h"
 #include "../FactorTypes/GeneralType.h"
 
-
+using namespace srmpLib;
 
 void Energy::Print()
 {

@@ -24,6 +24,8 @@
 
 #include "../SRMP.h"
 
+namespace srmpLib {
+
 struct PairwiseFactorType : Energy::FactorType
 {
 	PairwiseFactorType();
@@ -51,5 +53,5 @@ private:
 	ReusableBuffer rbuf2;
 };
 
-
+} // namespace srmpLib
 #endif

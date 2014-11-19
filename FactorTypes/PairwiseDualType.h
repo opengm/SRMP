@@ -24,6 +24,8 @@
 
 #include "../SRMP.h"
 
+namespace srmpLib {
+
 struct PairwiseDualFactorType : Energy::FactorType
 {
 	PairwiseDualFactorType();
@@ -57,5 +59,5 @@ private:
 
 };
 
-
+} // namespace srmpLib
 #endif

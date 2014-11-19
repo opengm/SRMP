@@ -98,6 +98,8 @@
 /***********************************************************************/
 /***********************************************************************/
 
+namespace srmpLib {
+
 template <class Type> class Block
 {
 public:
@@ -385,5 +387,6 @@ private:
 	void	(*error_function)(const char *);
 };
 
+} // namespace srmpLib
 #endif
 

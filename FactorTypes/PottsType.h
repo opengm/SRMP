@@ -85,6 +85,8 @@ int main(int argc, char* argv[])
 
 #include "../SRMP.h"
 
+namespace srmpLib {
+
 struct PottsFactorType : Energy::FactorType
 {
 	PottsFactorType();
@@ -110,5 +112,5 @@ private:
 	ReusableBuffer rbuf;
 };
 
-
+} // namespace srmpLib
 #endif

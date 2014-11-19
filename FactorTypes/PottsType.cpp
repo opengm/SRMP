@@ -19,6 +19,8 @@
 #include <assert.h>
 #include "PottsType.h"
 
+using namespace srmpLib;
+
 PottsFactorType::PottsFactorType() 
 	: buf(4096)
 {

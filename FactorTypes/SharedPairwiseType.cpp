@@ -19,6 +19,8 @@
 #include <assert.h>
 #include "SharedPairwiseType.h"
 
+using namespace srmpLib;
+
 SharedPairwiseFactorType::SharedPairwiseFactorType(int _K1, int _K2, double* _costs) 
 	: K1(_K1), K2(_K2),
 	  buf(4096)

@@ -19,6 +19,8 @@
 #include <assert.h>
 #include "PairwiseType.h"
 
+using namespace srmpLib;
+
 #define SRMP_WHICH_NODE user1
 
 PairwiseFactorType::PairwiseFactorType() : buf(4096)

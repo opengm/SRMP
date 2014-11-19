@@ -27,6 +27,7 @@
 #pragma warning(disable: 4996) /* Disable deprecation */
 #endif
 
+using namespace srmpLib;
 
 PottsFactorType* potts = NULL;
 

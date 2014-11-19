@@ -23,7 +23,7 @@
 #include "util.h"
 #include "../SRMP.h"
 
-
+using namespace srmpLib;
 
 
 double Energy::InitSRMP(Sequence& seq, Options& options)

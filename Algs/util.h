@@ -1,6 +1,7 @@
 #ifndef SRMP_GHAODJFNADJGHAJSD
 #define SRMP_GHAODJFNADJGHAJSD
 
+namespace srmpLib {
 
 // sorts arr[left..right]
 template <class Item> inline void quickSort(Item* arr, int left, int right)
@@ -39,4 +40,5 @@ template <class Item> inline void quickSort(Item* arr, int left, int right)
 	}
 }
 
+} // namespace srmpLib
 #endif

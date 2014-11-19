@@ -90,6 +90,8 @@ int main(int argc, char* argv[])
 
 #include "../SRMP.h"
 
+namespace srmpLib {
+
 struct SharedPairwiseFactorType : Energy::FactorType
 {
 	SharedPairwiseFactorType(int K1, int K2, double* costs);
@@ -118,5 +120,5 @@ private:
 	ReusableBuffer rbuf2;
 };
 
-
+} // namespace srmpLib
 #endif

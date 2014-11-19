@@ -20,7 +20,7 @@
 #include <assert.h>
 #include "PatternType.h"
 
-
+using namespace srmpLib;
 
 inline int CAST(void* p)
 {

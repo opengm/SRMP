@@ -36,7 +36,9 @@
 
 	#include <windows.h>
 
-	inline double get_time()
+    namespace srmpLib {
+
+    inline double get_time()
 	{
 		LARGE_INTEGER t, frequency;
 		QueryPerformanceCounter(&t);
@@ -44,6 +46,7 @@
 		return (double)t.QuadPart/(double)frequency.QuadPart;
 	}
 
+    } // namespace srmpLib
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +57,8 @@
 
 	#include <time.h>
 
+    namespace srmpLib {
+
 	inline double get_time()
 	{
 		struct timespec t;
@@ -61,6 +66,7 @@
 		return (double)t.tv_nsec*1.00E-9 + (double)t.tv_sec;
 	}
 
+    } // namespace srmpLib
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +77,8 @@
 
 	#include <sys/resource.h>
 
+    namespace srmpLib {
+
 	inline double get_time()
 	{
 		struct rusage t;
@@ -78,6 +86,7 @@
 		return (double)t.ru_utime.tv_usec*1.00E-6 + (double)t.ru_utime.tv_sec;
 	}
 
+    } // namespace srmpLib
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -86,8 +95,11 @@
 
 #ifdef SRMP_PM_TIMER_EXTERNAL
 
+    namespace srmpLib {
+
 	extern double get_time();
 
+    } // namespace srmpLib
 #endif
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -96,8 +108,11 @@
 
 #ifdef SRMP_PM_TIMER_NONE
 
+    namespace srmpLib {
+
 	inline double get_time() { return 0; }
 
+    } // namespace srmpLib
 #endif
 
 #endif

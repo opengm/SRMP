@@ -23,6 +23,8 @@
 #include "util.h"
 #include "../SRMP.h"
 
+using namespace srmpLib;
+
 /*
 struct MyNode;
 struct MyEdge

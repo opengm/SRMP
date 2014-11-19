@@ -104,6 +104,8 @@ int main(int argc, char* argv[])
 
 #include "../SRMP.h"
 
+namespace srmpLib {
+
 struct PatternFactorType : Energy::FactorType
 {
 	struct Input
@@ -150,5 +152,5 @@ private:
 	void RecomputeFactorData(Energy::NonSingletonFactor* A);
 };
 
-
+} // namespace srmpLib
 #endif

@@ -28,6 +28,8 @@
 
 #include <string.h>
 
+namespace srmpLib {
+
 template <typename REAL> class PriorityQueue
 {
 public:
@@ -392,5 +394,7 @@ template <typename REAL> inline typename PriorityQueue<REAL>::Item* PriorityQueu
 		if (i->leftPQ == j) return i;
 	}
 }
+
+} // namespace srmpLib
 
 #endif

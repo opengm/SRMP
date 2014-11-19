@@ -23,6 +23,8 @@
 #include "util.h"
 #include "../SRMP.h"
 
+using namespace srmpLib;
+
 double Energy::InitMPLP(Energy::Sequence& seq, Options& options)
 {
 	int t;

@@ -24,6 +24,8 @@
 #include "../SRMP.h"
 #include "PQ.h"
 
+using namespace srmpLib;
+
 int Energy::ScoreNodeOrdering()
 {
 	NonSingletonFactor* A;

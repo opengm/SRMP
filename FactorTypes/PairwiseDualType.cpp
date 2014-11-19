@@ -21,6 +21,8 @@
 #include "GeneralType.h"
 #include "../Algs/util.h"
 
+using namespace srmpLib;
+
 #define SRMP_WHICH_NODE user1
 
 int PairwiseDualFactorType::ComputeRestriction(Energy::Edge* e, int k)

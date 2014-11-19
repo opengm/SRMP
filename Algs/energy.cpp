@@ -25,6 +25,7 @@
 #include "../FactorTypes/PairwiseType.h"
 #include "../FactorTypes/GeneralType.h"
 
+using namespace srmpLib;
 
 Energy::Energy(int _node_num_max)
 	: node_num(0), node_num_max(_node_num_max), arity_max(1),
