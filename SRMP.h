@@ -268,6 +268,11 @@ public:
 //
 //#define SRMP_TEST_FACTOR_TYPES
 
+	    // virtual destructor
+	    virtual ~FactorType() {
+
+	    }
+
 		// called whenever a new factor is added
 		virtual void InitFactor(NonSingletonFactor* A, double* user_data, unsigned flags) = 0;
 

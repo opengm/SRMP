@@ -100,17 +100,17 @@ bool PatternFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
 
 	// set e->send_message_data so that D->pattern[(int)e->send_message_data] == e->B
 	// temporarily use Node::arity for this purpose
-	bool degenerate_case = false;
+	//bool degenerate_case = false;
 	for (i=0; i<n; i++) A->nodes[i]->arity = i;
 	for (e=A->first_out; e; e=e->next_out)
 	{
-		if (e->B->arity < 0) { degenerate_case = true; break; }
+		if (e->B->arity < 0) { /*degenerate_case = true;*/ break; }
 		e->send_message_data = CAST(e->B->arity);
 		e->B->arity = -1;
 	}
 	for (i=0; i<n; i++)
 	{
-		if (A->nodes[i]->arity >= 0) { degenerate_case = true; break; }
+		if (A->nodes[i]->arity >= 0) { /*degenerate_case = true;*/ break; }
 	}
 	for (i=0; i<n; i++) A->nodes[i]->arity = 1;
 
@@ -124,7 +124,8 @@ bool PatternFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
 void PatternFactorType::RecomputeFactorData(Energy::NonSingletonFactor* A)
 {
 	FactorData* D = (FactorData*) A->data;
-	int i, k, n = A->arity;
+	//int i, k, n = A->arity;
+	int i, k;
 	Energy::Edge* e;
 
 	D->sum_min = 0;

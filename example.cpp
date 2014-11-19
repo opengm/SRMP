@@ -184,7 +184,7 @@ Energy* ReadUAI(const char* filename)
 	               // 3: reading term descriptions
 	               // 4: reading term costs
 	               // 5: finished
-	int node_num, t, term_num;
+	int node_num = 0, t = 0, term_num = 0;
 	struct Term
 	{
 		int arity;

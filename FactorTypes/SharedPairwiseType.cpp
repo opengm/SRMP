@@ -52,10 +52,12 @@ double SharedPairwiseFactorType::GetCost(Energy::NonSingletonFactor* A)
 
 void SharedPairwiseFactorType::InitEdge(Energy::Edge* e)
 {
-	Energy::NonSingletonFactor* A = e->A;
+	//Energy::NonSingletonFactor* A = e->A;
 
-	assert (!A->first_out->next_out // single outgoing edge
-		|| (!A->first_out->next_out->next_out && A->first_out->B != A->first_out->next_out->B) ); // two outgoing edges to different nodes
+	//assert (!A->first_out->next_out // single outgoing edge
+	//	|| (!A->first_out->next_out->next_out && A->first_out->B != A->first_out->next_out->B) ); // two outgoing edges to different nodes
+    assert (!e->A->first_out->next_out // single outgoing edge
+        || (!e->A->first_out->next_out->next_out && e->A->first_out->B != e->A->first_out->next_out->B) ); // two outgoing edges to different nodes
 }
 
 bool SharedPairwiseFactorType::PrepareFactor(Energy::NonSingletonFactor* A)

@@ -305,7 +305,7 @@ class ReusableBuffer
 {
 public:
 	/* Constructor. */
-	ReusableBuffer(void (*err_function)(const char *) = NULL) : size_max(0), buf(NULL), error_function(err_function) {}
+	ReusableBuffer(void (*err_function)(const char *) = NULL) : buf(NULL), size_max(0), error_function(err_function) {}
 	~ReusableBuffer() { if (buf) free(buf); }
 
 	void* Alloc(int size)

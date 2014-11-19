@@ -30,8 +30,8 @@ using namespace srmpLib;
 Energy::Energy(int _node_num_max)
 	: node_num(0), node_num_max(_node_num_max), arity_max(1),
 	  factors(512), edges(NULL), buf(4096), is_solution_best_initialized(false), is_cost_best_valid(false),
-	  factor_type_pairwise(NULL), factor_type_general(NULL), 
-	  primal_graph(NULL), factor_type_pairwise_dual(NULL), dual_graph(NULL), dual_sequence(NULL)
+	  factor_type_general(NULL), factor_type_pairwise(NULL),
+	  factor_type_pairwise_dual(NULL), primal_graph(NULL), dual_graph(NULL), dual_sequence(NULL)
 {
 	nodes = new Node[node_num_max];
 }
@@ -442,7 +442,8 @@ void Energy::NonSingletonFactor::ComputeRestrictedMinimum(double* theta, Factor*
 	int* K_array = _buf + arity;
 	int* labeling = _buf + 2*arity;
 
-	int kB = 0, nB = 0;
+	//int kB = 0, nB = 0;
+	int kB = 0;
 	int* KBfactor_array = _buf + 3*arity;
 	Node** Bnodes = (B->arity == 1) ? (Node**)(&B) : ((NonSingletonFactor*)B)->nodes;
 

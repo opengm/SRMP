@@ -57,9 +57,10 @@ PairwiseDualFactorType::~PairwiseDualFactorType()
 
 void PairwiseDualFactorType::InitFactor(Energy::NonSingletonFactor* A, double* user_data, unsigned flags)
 {
-	Energy::Edge* e[2] = { ((Energy::Edge**)user_data)[0], ((Energy::Edge**)user_data)[1] };
+	//Energy::Edge* e[2] = { ((Energy::Edge**)user_data)[0], ((Energy::Edge**)user_data)[1] };
 	assert(A->arity == 2);
-	assert(e[0]->B == e[1]->B && e[0]->A->K == A->nodes[0]->K && e[1]->A->K == A->nodes[1]->K);
+	//assert(e[0]->B == e[1]->B && e[0]->A->K == A->nodes[0]->K && e[1]->A->K == A->nodes[1]->K);
+	assert(((Energy::Edge**)user_data)[0]->B == ((Energy::Edge**)user_data)[1]->B && ((Energy::Edge**)user_data)[0]->A->K == A->nodes[0]->K && ((Energy::Edge**)user_data)[1]->A->K == A->nodes[1]->K);
 
 	A->data = (double*) buf.Alloc(2*sizeof(Energy::Edge*));
 	memcpy(A->data, user_data, 2*sizeof(Energy::Edge*));
@@ -161,7 +162,7 @@ void PairwiseDualFactorType::SendRestrictedMessage(Energy::Edge* e0)
 	Energy::NonSingletonFactor* AC = e0->A;
 	Energy::Edge* eA = ((Energy::Edge**)AC->data)[1-e0->SRMP_WHICH_NODE];
 	Energy::Edge* eC = ((Energy::Edge**)AC->data)[e0->SRMP_WHICH_NODE];
-	Energy::NonSingletonFactor* A = eA->A;
+	//Energy::NonSingletonFactor* A = eA->A;
 	Energy::NonSingletonFactor* C = eC->A;
 	Energy::Factor* B = eA->B;
 	int a, b, c;
