@@ -46,7 +46,7 @@ double Energy::InitCMP(Sequence& seq, Options& options)
 		else if (!_A->first_out)
 		{
 			_A->rep = NULL;
-			LB_init += SEND_MPLP_MESSAGES(_A, false);
+			LB_init += SRMP_SEND_MPLP_MESSAGES(_A, false);
 		}
 	}
 
@@ -135,13 +135,13 @@ double Energy::SolveCMP(Options& options)
 			int b, K = B->K;
 
 			if (B->arity == 1) memcpy(theta, B->data, K*sizeof(double));
-			else COMPUTE_PARTIAL_REPARAMETERIZATION((NonSingletonFactor*)B, theta);
+			else SRMP_COMPUTE_PARTIAL_REPARAMETERIZATION((NonSingletonFactor*)B, theta);
 
 			int w_total = B->weight_forward;
 			int w_compute_bound = (B->compute_bound) ? B->weight_forward : 0;
 			for (e=B->first_in; e; e=e->next_in)
 			{
-				v = SEND_MESSAGE(e);
+				v = SRMP_SEND_MESSAGE(e);
 				if (e->compute_bound) { LB += v; w_compute_bound += e->weight_forward; }
 				for (b=0; b<K; b++) theta[b] += e->m[b]; 
 				w_total += e->weight_forward;
@@ -188,7 +188,7 @@ double Energy::SolveCMP(Options& options)
 			else                  printf("lower bound=%f\n", LB);
 		}
 
-#ifdef VNK_DEBUG
+#ifdef SRMP_VNK_DEBUG
 		double LB_check = ComputeLowerBound();
 		assert (fabs(LB - LB_check) < 1e-5);
 #endif

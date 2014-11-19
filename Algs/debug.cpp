@@ -57,7 +57,7 @@ void Energy::Print()
 }
 
 
-#ifdef TEST_FACTOR_TYPES 
+#ifdef SRMP_TEST_FACTOR_TYPES
 
 void Energy::TestComputePartialReparameterization(NonSingletonFactor* A, double* theta)
 {
@@ -331,7 +331,7 @@ double Energy::TestSendMPLPMessages(NonSingletonFactor* A, bool set_solution)
 
 
 
-#ifdef VNK_DEBUG
+#ifdef SRMP_VNK_DEBUG
 void Energy::AddRandomEdges(double prob)
 {
 	NonSingletonFactor* A;

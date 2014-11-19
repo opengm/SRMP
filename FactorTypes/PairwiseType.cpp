@@ -19,7 +19,7 @@
 #include <assert.h>
 #include "PairwiseType.h"
 
-#define WHICH_NODE user1
+#define SRMP_WHICH_NODE user1
 
 PairwiseFactorType::PairwiseFactorType() : buf(4096)
 {
@@ -56,8 +56,8 @@ void PairwiseFactorType::InitEdge(Energy::Edge* e)
 	assert (!A->first_out->next_out // single outgoing edge
 		|| (!A->first_out->next_out->next_out && A->first_out->B != A->first_out->next_out->B) ); // two outgoing edges to different nodes
 
-	if ((Energy::Node*)e->B == A->nodes[0]) e->WHICH_NODE = 0;
-	else                                    e->WHICH_NODE = 1;
+	if ((Energy::Node*)e->B == A->nodes[0]) e->SRMP_WHICH_NODE = 0;
+	else                                    e->SRMP_WHICH_NODE = 1;
 }
 
 bool PairwiseFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
@@ -73,7 +73,7 @@ void PairwiseFactorType::ComputePartialReparameterization(Energy::NonSingletonFa
 	memcpy(theta, A->data, A->K*sizeof(double));
 	for (e=A->first_out; e; e=e->next_out)
 	{
-		if (e->WHICH_NODE == 0)
+		if (e->SRMP_WHICH_NODE == 0)
 		{
 			for (x=0; x<X; x++)
 			for (y=0; y<Y; y++)
@@ -117,13 +117,13 @@ double PairwiseFactorType::SendMessage(Energy::Edge* e)
 	if (e2 != e) m_rev = e2->m;
 	else
 	{
-		int K_rev = A->nodes[1 - e->WHICH_NODE]->K;
+		int K_rev = A->nodes[1 - e->SRMP_WHICH_NODE]->K;
 		m_rev = (double*) rbuf2.Alloc(K_rev*sizeof(double));
 		memset(m_rev, 0, K_rev*sizeof(double));
 	}
 
 	int x, y, X = A->nodes[0]->K, Y = A->nodes[1]->K;
-	if (e->WHICH_NODE == 0)
+	if (e->SRMP_WHICH_NODE == 0)
 	{
 		for (x=0; x<X; x++)
 		{
@@ -183,9 +183,9 @@ void PairwiseFactorType::SendRestrictedMessage(Energy::Edge* e)
 	Energy::Edge* e2;
 	int x, y, X = A->nodes[0]->K, Y = A->nodes[1]->K;
 
-	assert(A->nodes[e->WHICH_NODE]->solution < 0 && A->nodes[1 - e->WHICH_NODE]->solution >= 0);
+	assert(A->nodes[e->SRMP_WHICH_NODE]->solution < 0 && A->nodes[1 - e->SRMP_WHICH_NODE]->solution >= 0);
 
-	if (e->WHICH_NODE == 0)
+	if (e->SRMP_WHICH_NODE == 0)
 	{
 		y = A->nodes[1]->solution;
 		for (x=0; x<X; x++)
@@ -236,7 +236,7 @@ double PairwiseFactorType::_SendMPLPMessages(Energy::NonSingletonFactor* A, bool
 	int x, y, X = A->nodes[0]->K, Y = A->nodes[1]->K;
 	for (e=A->first_out; e; e=e->next_out)
 	{
-		if (e->WHICH_NODE == 0)
+		if (e->SRMP_WHICH_NODE == 0)
 		{
 			for (x=0, a=0; x<X; x++)
 			for (y=0; y<Y; y++, a++)
@@ -271,7 +271,7 @@ double PairwiseFactorType::_SendMPLPMessages(Energy::NonSingletonFactor* A, bool
 	{
 		double rho = e->weight_forward * total_weight_inv;
 
-		if (e->WHICH_NODE == 0)
+		if (e->SRMP_WHICH_NODE == 0)
 		{
 			for (x=0; x<X; x++)
 			{
@@ -351,8 +351,8 @@ double PairwiseFactorType::SendMPLPMessages(Energy::NonSingletonFactor* A, bool 
 	int weight[2];
 	for (e=A->first_out; e; e=e->next_out)
 	{
-		rep[e->WHICH_NODE] = e->B->rep;
-		weight[e->WHICH_NODE] = e->weight_forward;
+		rep[e->SRMP_WHICH_NODE] = e->B->rep;
+		weight[e->SRMP_WHICH_NODE] = e->weight_forward;
 	}
 
 	int x, y, X = A->nodes[0]->K, Y = A->nodes[1]->K;
@@ -457,20 +457,20 @@ double PairwiseFactorType::SendMPLPMessages(Energy::NonSingletonFactor* A, bool 
 
 	double* rep[2];
 	int weight[2];
-	rep[e->WHICH_NODE] = e->B->rep;
-	weight[e->WHICH_NODE] = e->weight_forward;
+	rep[e->SRMP_WHICH_NODE] = e->B->rep;
+	weight[e->SRMP_WHICH_NODE] = e->weight_forward;
 	if (e->next_out)
 	{
 		e = e->next_out;
-		rep[e->WHICH_NODE] = e->B->rep;
-		weight[e->WHICH_NODE] = e->weight_forward;
+		rep[e->SRMP_WHICH_NODE] = e->B->rep;
+		weight[e->SRMP_WHICH_NODE] = e->weight_forward;
 	}
 	else
 	{
-		int K = A->nodes[1 - e->WHICH_NODE]->K;
-		rep[1 - e->WHICH_NODE] = (double*) rbuf2.Alloc(K*sizeof(double));
-		memset(rep[1 - e->WHICH_NODE], 0, K*sizeof(double));
-		weight[1 - e->WHICH_NODE] = 0;
+		int K = A->nodes[1 - e->SRMP_WHICH_NODE]->K;
+		rep[1 - e->SRMP_WHICH_NODE] = (double*) rbuf2.Alloc(K*sizeof(double));
+		memset(rep[1 - e->SRMP_WHICH_NODE], 0, K*sizeof(double));
+		weight[1 - e->SRMP_WHICH_NODE] = 0;
 	}
 
 	int x, y, X = A->nodes[0]->K, Y = A->nodes[1]->K;

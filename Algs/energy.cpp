@@ -261,7 +261,7 @@ double Energy::ComputeCost()
 		cost_best = cost;
 		for (i=nodes; i<nodes+node_num; i++) i->solution_best = i->solution;
 	}
-	if (primal_graph && cost >= ENERGY_INFTY/2) // we are in the dual energy; the solution is inconsistent!
+	if (primal_graph && cost >= SRMP_ENERGY_INFTY/2) // we are in the dual energy; the solution is inconsistent!
 	{
 		cost = primal_graph->ConvertSolutionDualToPrimal();
 		primal_graph->dual_solution_was_inconsistent = true;
@@ -337,7 +337,7 @@ void Energy::ComputeSolution(Factor* B, void* _buf)
 	if (exists_unlabeled)
 	{
 		if (B->arity == 1) memcpy(theta, B->data, K*sizeof(double));
-		else COMPUTE_PARTIAL_REPARAMETERIZATION((NonSingletonFactor*)B, theta);
+		else SRMP_COMPUTE_PARTIAL_REPARAMETERIZATION((NonSingletonFactor*)B, theta);
 
 		for (e=B->first_in; e; e=e->next_in)
 		{
@@ -347,7 +347,7 @@ void Energy::ComputeSolution(Factor* B, void* _buf)
 			{
 				double* m_old = e->m;
 				e->m = m;
-				SEND_RESTRICTED_MESSAGE(e);
+				SRMP_SEND_RESTRICTED_MESSAGE(e);
 				e->m = m_old;
 				for (b=0; b<K; b++) theta[b] += m[b];
 			}
@@ -527,7 +527,7 @@ double Energy::ComputeLowerBound()
 		{
 			double* Arep_old = A->rep;
 			A->rep = NULL;
-			LB += SEND_MPLP_MESSAGES(A, false);
+			LB += SRMP_SEND_MPLP_MESSAGES(A, false);
 			A->rep = Arep_old;
 			continue;
 		}
@@ -536,7 +536,7 @@ double Energy::ComputeLowerBound()
 		double* m_old = e->m;
 		double* m_new = e->m = (double*) theta_rbuf.Alloc(e->B->K*sizeof(double));
 		memcpy(m_new, m_old, e->B->K*sizeof(double));
-		LB += SEND_MESSAGE(e);
+		LB += SRMP_SEND_MESSAGE(e);
 		e->m = m_old;
 		double v_min = -m_old[0] + m_new[0];
 		for (b=1; b<e->B->K; b++)
@@ -670,7 +670,7 @@ void Energy::SaveUAI(char* filename, bool sort_factors, bool save_reparameteriza
 			if (A->arity == 1) memcpy(costs, A->data, A->K*sizeof(double));
 			else
 			{
-				COMPUTE_PARTIAL_REPARAMETERIZATION((NonSingletonFactor*)A, costs);
+			    SRMP_COMPUTE_PARTIAL_REPARAMETERIZATION((NonSingletonFactor*)A, costs);
 			}
 
 			Edge* e;

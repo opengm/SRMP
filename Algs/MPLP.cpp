@@ -39,7 +39,7 @@ double Energy::InitMPLP(Energy::Sequence& seq, Options& options)
 		else if (!A->first_in)
 		{
 			A->rep = NULL;
-			LB_init += SEND_MPLP_MESSAGES(A, false);
+			LB_init += SRMP_SEND_MPLP_MESSAGES(A, false);
 		}
 	}
 	for (i=nodes; i<nodes+node_num; i++)
@@ -189,7 +189,7 @@ double Energy::SolveMPLP(Options& options)
 				}
 			}
 
-			v = SEND_MPLP_MESSAGES(A, compute_solution);
+			v = SRMP_SEND_MPLP_MESSAGES(A, compute_solution);
 			if (A->compute_bound) LB += v;
 
 			for (e=A->first_out; e; e=e->next_out)
@@ -229,7 +229,7 @@ double Energy::SolveMPLP(Options& options)
 					}
 				}
 
-				v = SEND_MPLP_MESSAGES(A, compute_solution);
+				v = SRMP_SEND_MPLP_MESSAGES(A, compute_solution);
 				if (A->compute_bound) LB += v;
 
 				for (e=A->first_out; e; e=e->next_out)
@@ -258,7 +258,7 @@ double Energy::SolveMPLP(Options& options)
 			else                                        printf("lower bound=%f\n", LB);
 		}
 
-#ifdef VNK_DEBUG
+#ifdef SRMP_VNK_DEBUG
 		double LB_check = ComputeLowerBound();
 		assert (fabs(LB - LB_check) < 1e-5);
 #endif

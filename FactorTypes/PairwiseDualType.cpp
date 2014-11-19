@@ -21,7 +21,7 @@
 #include "GeneralType.h"
 #include "../Algs/util.h"
 
-#define WHICH_NODE user1
+#define SRMP_WHICH_NODE user1
 
 int PairwiseDualFactorType::ComputeRestriction(Energy::Edge* e, int k)
 {
@@ -83,7 +83,7 @@ double PairwiseDualFactorType::GetCost(Energy::NonSingletonFactor* AB)
 	for (i=A[1]->arity-1; i>=0; i--)
 	{
 		int Ki = A[1]->nodes[i]->K;
-		if (A[1]->nodes[i]->solution >= 0 && A[1]->nodes[i]->solution != k % Ki) return ENERGY_INFTY;
+		if (A[1]->nodes[i]->solution >= 0 && A[1]->nodes[i]->solution != k % Ki) return SRMP_ENERGY_INFTY;
 		k /= Ki;
 	}
 
@@ -94,8 +94,8 @@ void PairwiseDualFactorType::InitEdge(Energy::Edge* e)
 {
 	Energy::NonSingletonFactor* A = e->A;
 
-	if ((Energy::Node*)e->B == A->nodes[0]) e->WHICH_NODE = 0;
-	else                                    e->WHICH_NODE = 1;
+	if ((Energy::Node*)e->B == A->nodes[0]) e->SRMP_WHICH_NODE = 0;
+	else                                    e->SRMP_WHICH_NODE = 1;
 }
 
 bool PairwiseDualFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
@@ -117,8 +117,8 @@ void PairwiseDualFactorType::ComputePartialReparameterization(Energy::NonSinglet
 double PairwiseDualFactorType::SendMessage(Energy::Edge* e0)
 {
 	Energy::NonSingletonFactor* AC = e0->A;
-	Energy::Edge* eA = ((Energy::Edge**)AC->data)[1-e0->WHICH_NODE];
-	Energy::Edge* eC = ((Energy::Edge**)AC->data)[e0->WHICH_NODE];
+	Energy::Edge* eA = ((Energy::Edge**)AC->data)[1-e0->SRMP_WHICH_NODE];
+	Energy::Edge* eC = ((Energy::Edge**)AC->data)[e0->SRMP_WHICH_NODE];
 	Energy::NonSingletonFactor* A = eA->A;
 	Energy::NonSingletonFactor* C = eC->A;
 	Energy::Factor* B = eA->B;
@@ -157,19 +157,19 @@ double PairwiseDualFactorType::SendMessage(Energy::Edge* e0)
 void PairwiseDualFactorType::SendRestrictedMessage(Energy::Edge* e0)
 {
 	Energy::NonSingletonFactor* AC = e0->A;
-	Energy::Edge* eA = ((Energy::Edge**)AC->data)[1-e0->WHICH_NODE];
-	Energy::Edge* eC = ((Energy::Edge**)AC->data)[e0->WHICH_NODE];
+	Energy::Edge* eA = ((Energy::Edge**)AC->data)[1-e0->SRMP_WHICH_NODE];
+	Energy::Edge* eC = ((Energy::Edge**)AC->data)[e0->SRMP_WHICH_NODE];
 	Energy::NonSingletonFactor* A = eA->A;
 	Energy::NonSingletonFactor* C = eC->A;
 	Energy::Factor* B = eA->B;
 	int a, b, c;
 
-	a = AC->nodes[1-e0->WHICH_NODE]->solution;
+	a = AC->nodes[1-e0->SRMP_WHICH_NODE]->solution;
 	b = ComputeRestriction(eA, a);
 
 	int* TC = (int*) eC->send_message_data;
 	int* TCbar = TC + B->K;
-	for (c=0; c<C->K; c++) e0->m[c] = ENERGY_INFTY;
+	for (c=0; c<C->K; c++) e0->m[c] = SRMP_ENERGY_INFTY;
 	for (c=0; c<C->K/B->K; c++)
 	{
 		e0->m[TC[b] + TCbar[c]] = 0;
@@ -242,7 +242,7 @@ double PairwiseDualFactorType::SendMPLPMessages(Energy::NonSingletonFactor* _A, 
 	}
 
 	int weight[2];
-	for (Energy::Edge* e=_A->first_out; e; e=e->next_out) weight[e->WHICH_NODE] = e->weight_forward;
+	for (Energy::Edge* e=_A->first_out; e; e=e->next_out) weight[e->SRMP_WHICH_NODE] = e->weight_forward;
 	int total_weight = _A->weight_forward + weight[0] + weight[1];
 	double total_weight_inv = 1.0 / total_weight;
 

@@ -83,7 +83,7 @@ Energy::Node* Energy::_GenerateNodeOrdering(Node* seed)
 			pq.Add(&items[counter]);
 			continue;
 		}
-		pq.Remove(t, pq_buf);
+		pq.SRMP_Remove(t, pq_buf);
 		t->slack = 1;
 		Node* p = nodes + (int)(t - items);
 		//printf("%d ", (int)(t-items));

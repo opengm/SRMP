@@ -34,13 +34,13 @@
 #include "Algs/block.h"
 #include "Algs/timer.h"
 
-//#define VNK_DEBUG
+//#define SRMP_VNK_DEBUG
 
 
 // flags for Energy::AddFactor(...)
 const unsigned FLAG_DO_NOT_COPY_INTO_INTERNAL_MEMORY = 0x0001; // used for PairwiseFactorType, GeneralFactorType and PatternFactorType
 
-#define ENERGY_INFTY (1e100)
+#define SRMP_ENERGY_INFTY (1e100)
 
 class Energy
 {
@@ -260,11 +260,11 @@ public:
 	};
 	struct FactorType
 	{
-// if TEST_FACTOR_TYPES is defined then outputs of ComputePartialRepameterization(), SendMessage(), SendRestrictedMessage(), SendMPLPMessages()
+// if SRMP_TEST_FACTOR_TYPES is defined then outputs of ComputePartialRepameterization(), SendMessage(), SendRestrictedMessage(), SendMPLPMessages()
 // will be compared against true outputs (where costs are obtained via GetCost()). 
 // Exception: the set_solution option in SendMPLPMessages() is not tested.
 //
-//#define TEST_FACTOR_TYPES 
+//#define SRMP_TEST_FACTOR_TYPES
 
 		// called whenever a new factor is added
 		virtual void InitFactor(NonSingletonFactor* A, double* user_data, unsigned flags) = 0;
@@ -451,14 +451,14 @@ public:
 	void PrintEdge(Edge* e) { PrintFactor(e->A); printf("->"); PrintFactor(e->B); }
 	void Print();
 
-#ifdef TEST_FACTOR_TYPES 
+#ifdef SRMP_TEST_FACTOR_TYPES
 	void   TestComputePartialReparameterization(NonSingletonFactor* A, double* theta);
 	double TestSendMessage(Edge* e);
 	void   TestSendRestrictedMessage(Edge* e);
 	double TestSendMPLPMessages(NonSingletonFactor* A, bool set_solution=false);
 #endif
 
-#ifdef VNK_DEBUG
+#ifdef SRMP_VNK_DEBUG
 	void AddRandomEdges(double prob);
 	FactorId GetFactorId(int arity, NodeId* node_indexes); // returns the first such factor (or NULL, if such factor doesn't exist)
 #endif
@@ -522,19 +522,19 @@ inline int Energy::CompareFactorsX(Factor* A, Factor* B)
 
 
 
-#ifdef TEST_FACTOR_TYPES
+#ifdef SRMP_TEST_FACTOR_TYPES
 
-#define COMPUTE_PARTIAL_REPARAMETERIZATION(A, theta) TestComputePartialReparameterization(A, theta) 
-#define SEND_MESSAGE(e)                              TestSendMessage(e)
-#define SEND_RESTRICTED_MESSAGE(e)                   TestSendRestrictedMessage(e)
-#define SEND_MPLP_MESSAGES(A, set_solution)          TestSendMPLPMessages(A, set_solution)
+#define SRMP_COMPUTE_PARTIAL_REPARAMETERIZATION(A, theta) TestComputePartialReparameterization(A, theta)
+#define SRMP_SEND_MESSAGE(e)                              TestSendMessage(e)
+#define SRMP_SEND_RESTRICTED_MESSAGE(e)                   TestSendRestrictedMessage(e)
+#define SRMP_SEND_MPLP_MESSAGES(A, set_solution)          TestSendMPLPMessages(A, set_solution)
 
 #else
 
-#define COMPUTE_PARTIAL_REPARAMETERIZATION(A, theta) (A)->type->ComputePartialReparameterization(A, theta) 
-#define SEND_MESSAGE(e)                              (e)->A->type->SendMessage(e)
-#define SEND_RESTRICTED_MESSAGE(e)                   (e)->A->type->SendRestrictedMessage(e)
-#define SEND_MPLP_MESSAGES(A, set_solution)          (A)->type->SendMPLPMessages(A, set_solution)
+#define SRMP_COMPUTE_PARTIAL_REPARAMETERIZATION(A, theta) (A)->type->ComputePartialReparameterization(A, theta)
+#define SRMP_SEND_MESSAGE(e)                              (e)->A->type->SendMessage(e)
+#define SRMP_SEND_RESTRICTED_MESSAGE(e)                   (e)->A->type->SendRestrictedMessage(e)
+#define SRMP_SEND_MPLP_MESSAGES(A, set_solution)          (A)->type->SendMPLPMessages(A, set_solution)
 
 #endif
 

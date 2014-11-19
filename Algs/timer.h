@@ -8,23 +8,23 @@
 #define SRMP_NJAKSDTHASKJERAXJGFBZJDLAGZ
 
 // At most one of the flags
-//    PM_TIMER_MSVC
-//    PM_TIMER_CLOCK_GETTIME
-//    PM_TIMER_GETRUSAGE
-//    PM_TIMER_EXTERNAL
-//    PM_TIMER_NONE
-// can be defined externally. If PM_TIMER_EXTERNAL is defined,
+//    SRMP_PM_TIMER_MSVC
+//    SRMP_PM_TIMER_CLOCK_GETTIME
+//    SRMP_PM_TIMER_GETRUSAGE
+//    SRMP_PM_TIMER_EXTERNAL
+//    SRMP_PM_TIMER_NONE
+// can be defined externally. If SRMP_PM_TIMER_EXTERNAL is defined,
 // then there must exist a definition of function "double get_time()" elsewhere.
 
-#if defined (PM_TIMER_MSVC) || defined (PM_TIMER_CLOCK_GETTIME) || defined (PM_TIMER_GETRUSAGE) || defined (PM_TIMER_EXTERNAL) || defined (PM_TIMER_NONE)
+#if defined (SRMP_PM_TIMER_MSVC) || defined (SRMP_PM_TIMER_CLOCK_GETTIME) || defined (SRMP_PM_TIMER_GETRUSAGE) || defined (SRMP_PM_TIMER_EXTERNAL) || defined (SRMP_PM_TIMER_NONE)
 #else
 	// default option
 	#ifdef _MSC_VER
-		#define PM_TIMER_MSVC
+		#define SRMP_PM_TIMER_MSVC
 	#elif defined(__APPLE_CC__)
-		#define PM_TIMER_GETRUSAGE
+		#define SRMP_PM_TIMER_GETRUSAGE
 	#else
-		#define PM_TIMER_CLOCK_GETTIME
+		#define SRMP_PM_TIMER_CLOCK_GETTIME
 	#endif
 #endif
 
@@ -32,7 +32,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef PM_TIMER_MSVC
+#ifdef SRMP_PM_TIMER_MSVC
 
 	#include <windows.h>
 
@@ -50,7 +50,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef PM_TIMER_CLOCK_GETTIME
+#ifdef SRMP_PM_TIMER_CLOCK_GETTIME
 
 	#include <time.h>
 
@@ -67,7 +67,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef PM_TIMER_GETRUSAGE
+#ifdef SRMP_PM_TIMER_GETRUSAGE
 
 	#include <sys/resource.h>
 
@@ -84,7 +84,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef PM_TIMER_EXTERNAL
+#ifdef SRMP_PM_TIMER_EXTERNAL
 
 	extern double get_time();
 
@@ -94,7 +94,7 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef PM_TIMER_NONE
+#ifdef SRMP_PM_TIMER_NONE
 
 	inline double get_time() { return 0; }
 

@@ -138,7 +138,7 @@ void Energy::Tighten()
 		if (A->arity != 2) continue;
 		if (!A->type->incoming_edges_allowed) continue;
 		double* theta = (double*) my_rbuf.Alloc(A->K*sizeof(double));
-		COMPUTE_PARTIAL_REPARAMETERIZATION(A, theta);
+		SRMP_COMPUTE_PARTIAL_REPARAMETERIZATION(A, theta);
 		for (e=A->first_in; e; e=e->next_in)
 		{
 			for (a=0; a<A->K; a++) theta[a] += e->m[a];

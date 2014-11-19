@@ -23,8 +23,8 @@
 #define SRMP_HFKSJHFKJHARBABDAKFAF
 
 // exactly one flag must be defined
-//#define PQ_MULTIPASS
-#define PQ_INTERLEAVED_MULTIPASS
+//#define SRMP_PQ_MULTIPASS
+#define SRMP_PQ_INTERLEAVED_MULTIPASS
 
 #include <string.h>
 
@@ -56,7 +56,7 @@ public:
 
 	void Reset();
 	void Add(Item* i);
-#define Remove(i, buf) _Remove(i)
+#define SRMP_Remove(i, buf) _Remove(i)
 	void _Remove(Item* i);
 	void Decrease(Item* i_old, Item* i_new, void* buf);
 	Item* GetMin();
@@ -133,7 +133,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 */
 
 // sets i = merge(i, j). Ignores parentPQ and rightPQ for i and j.
-#define MERGE_PQ(i, j)\
+#define SRMP_MERGE_PQ(i, j)\
 	{\
 		if (i->slack <= j->slack)\
 		{\
@@ -158,7 +158,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 	rootPQ->parentPQ = NULL;
 	if (i)
 	{
-#ifdef PQ_MULTIPASS
+#ifdef SRMP_PQ_MULTIPASS
 		while ( i->rightPQ )
 		{
 			Item** prev_ptr = &rootPQ;
@@ -168,7 +168,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 				{
 					Item* j = i->rightPQ;
 					Item* next = j->rightPQ;
-					MERGE_PQ(i, j);
+					SRMP_MERGE_PQ(i, j);
 					*prev_ptr = i;
 					if (!next) { i->rightPQ = NULL; break; }
 					prev_ptr = &i->rightPQ;
@@ -185,7 +185,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 		}
 #endif
 
-#ifdef PQ_INTERLEAVED_MULTIPASS
+#ifdef SRMP_PQ_INTERLEAVED_MULTIPASS
 		while ( i->rightPQ )
 		{
 			Item* prev = NULL;
@@ -196,7 +196,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 				{
 					Item* j = i->rightPQ;
 					next = j->rightPQ;
-					MERGE_PQ(i, j);
+					SRMP_MERGE_PQ(i, j);
 				}
 				else next = NULL;
 				i->rightPQ = prev;
@@ -276,7 +276,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::Decrease(Item* i_old, 
 	}
 	else
 	{
-		Remove(i_old, _buf);
+		SRMP_Remove(i_old, _buf);
 		Add(i_new);
 	}
 }
