@@ -17,9 +17,9 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "PairwiseDualType.h"
-#include "GeneralType.h"
-#include "../Algs/util.h"
+#include <srmp/FactorTypes/PairwiseDualType.h>
+#include <srmp/FactorTypes/GeneralType.h>
+#include <srmp/Algs/util.h>
 
 using namespace srmpLib;
 

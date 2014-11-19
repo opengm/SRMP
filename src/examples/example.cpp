@@ -20,8 +20,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include "SRMP.h"
-#include "FactorTypes/PottsType.h"
+#include <srmp/SRMP.h>
+#include <srmp/FactorTypes/PottsType.h>
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4996) /* Disable deprecation */

@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "GeneralType.h"
+#include <srmp/FactorTypes/GeneralType.h>
 
 using namespace srmpLib;
 

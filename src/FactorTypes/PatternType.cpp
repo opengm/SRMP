@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
-#include "PatternType.h"
+#include <srmp/FactorTypes/PatternType.h>
 
 using namespace srmpLib;
 

@@ -20,9 +20,9 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "util.h"
-#include "../SRMP.h"
-#include "PQ.h"
+#include <srmp/Algs/util.h>
+#include <srmp/SRMP.h>
+#include <srmp/Algs/PQ.h>
 
 using namespace srmpLib;
 

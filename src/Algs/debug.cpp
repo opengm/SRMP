@@ -20,9 +20,9 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
-#include "util.h"
-#include "../SRMP.h"
-#include "../FactorTypes/GeneralType.h"
+#include <srmp/Algs/util.h>
+#include <srmp/SRMP.h>
+#include <srmp/FactorTypes/GeneralType.h>
 
 using namespace srmpLib;
 

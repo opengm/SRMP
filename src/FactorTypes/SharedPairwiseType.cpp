@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "SharedPairwiseType.h"
+#include <srmp/FactorTypes/SharedPairwiseType.h>
 
 using namespace srmpLib;
 

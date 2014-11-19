@@ -1,4 +1,4 @@
-DIRS := . FactorTypes Algs
+DIRS := src/examples src/FactorTypes src/Algs
 
 SOURCES := $(foreach dir, $(DIRS), $(wildcard $(dir)/*.cpp))
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
@@ -7,7 +7,7 @@ CFLAGS := -O3 -DNDEBUG
 #CFLAGS := -g
 CXX ?= c++
 LIBS := 
-INCLUDES := 
+INCLUDES := -I./include
 LIBDIR := 
 
 # Add librt if the target platform is not Darwin (OS X)

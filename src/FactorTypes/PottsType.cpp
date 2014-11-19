@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include <assert.h>
-#include "PottsType.h"
+#include <srmp/FactorTypes/PottsType.h>
 
 using namespace srmpLib;
 
