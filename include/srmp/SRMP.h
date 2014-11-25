@@ -82,8 +82,8 @@ public:
 	// The meaning of pointer 'costs' may be different for custom types (and the same for 'flags')
 	FactorId AddFactor(int arity, NodeId* node_indexes, double* costs, FactorType* type = NULL, unsigned flags = 0);
 
-	int GetNodeNum() { return node_num; }
-	int GetK(NodeId i) { return nodes[i].K; }
+	int GetNodeNum() const { return node_num; }
+	int GetK(NodeId i) const { return nodes[i].K; }
 
 
 	/////////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ public:
 	};
 
 	double Solve(Options& options);
-	int GetSolution(NodeId i) { return nodes[i].solution_best; } // can be called after Solve()
+	int GetSolution(NodeId i) const { return nodes[i].solution_best; } // can be called after Solve()
 
 
 	/////////////////////////////////////////////////////////////////////////
