@@ -36,9 +36,11 @@ SET(SRMP_SRC_FILES
 
 # create library
 add_library (srmp ${SRMP_SRC_FILES})
+add_library (srmp-shared SHARED ${SRMP_SRC_FILES})
 
 # point to include directory
 target_include_directories (srmp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories (srmp-shared PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # build example
 add_executable (srmpExample ${CMAKE_CURRENT_SOURCE_DIR}/src/examples/example.cpp)
@@ -52,3 +54,15 @@ if(UNIX AND NOT APPLE)
    find_library(RT rt)
    target_link_libraries (srmpExample LINK_PUBLIC rt)
 endif(UNIX AND NOT APPLE)
+
+# install
+if(NOT DEFINED SRMP_INSTALL_LIB_DESTINATION)
+   set(SRMP_INSTALL_LIB_DESTINATION lib)
+endif(NOT DEFINED SRMP_INSTALL_LIB_DESTINATION)
+if(NOT DEFINED SRMP_INSTALL_HEADER_DESTINATION)
+   set(SRMP_INSTALL_HEADER_DESTINATION include)
+endif(NOT DEFINED SRMP_INSTALL_HEADER_DESTINATION)
+
+install(TARGETS srmp DESTINATION ${SRMP_INSTALL_LIB_DESTINATION})
+install(TARGETS srmp-shared DESTINATION ${SRMP_INSTALL_LIB_DESTINATION})
+install(DIRECTORY include/srmp DESTINATION ${SRMP_INSTALL_HEADER_DESTINATION})
