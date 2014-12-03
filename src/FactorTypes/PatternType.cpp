@@ -82,7 +82,7 @@ double PatternFactorType::GetCost(Energy::NonSingletonFactor* A)
 	return D->cost;
 }
 
-void PatternFactorType::InitEdge(Energy::Edge* e)
+void PatternFactorType::InitEdge(Energy::Edge*)
 {
 }
 
@@ -145,7 +145,7 @@ void PatternFactorType::RecomputeFactorData(Energy::NonSingletonFactor* A)
 	}
 }
 
-void PatternFactorType::ComputePartialReparameterization(Energy::NonSingletonFactor* A, double* theta)
+void PatternFactorType::ComputePartialReparameterization(Energy::NonSingletonFactor*, double*)
 {
 	// this function should never be called since incoming edges are not allowed (as specified in PrepareFactor())
 	printf("Error: ComputePartialReparameterization() should not be called for this type. (Trying to save non-standard factor?");

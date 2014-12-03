@@ -20,6 +20,7 @@
 #include <string.h>
 #include <math.h>
 #include <assert.h>
+#include <limits>
 #include <srmp/Algs/util.h>
 #include <srmp/SRMP.h>
 
@@ -392,8 +393,9 @@ double Energy::Solve(Options& options)
 		{
 			LB = ComputeLowerBound();
 			printf("lower_bound=%f\n", LB);
+			return LB;
 		}
-		return LB;
+		return -std::numeric_limits<double>::infinity();
 	}
 
 	if      (options.method == Options::SRMP) LB = SolveSRMP(options);

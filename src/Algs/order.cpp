@@ -56,7 +56,7 @@ Energy::Node* Energy::_GenerateNodeOrdering(Node* seed)
 {
 	int i, k, assigned_num = 0, counter = 0;
 	PriorityQueue<double> pq;
-	void* pq_buf = pq.AllocateBuf();
+	//void* pq_buf = pq.AllocateBuf();
 	pq.Reset();
 	PriorityQueue<double>::Item* items = new PriorityQueue<double>::Item[node_num];
 	PriorityQueue<double>::Item* t;
@@ -108,7 +108,7 @@ Energy::Node* Energy::_GenerateNodeOrdering(Node* seed)
 				else
 				{
 					items[i].slack --;
-					pq.Decrease(&items[i], &items[i], pq_buf);
+					pq.Decrease(&items[i], &items[i]/*, pq_buf*/);
 				}
 			}
 		}

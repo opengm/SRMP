@@ -119,7 +119,7 @@ void GeneralFactorType::InitEdge(Energy::Edge* e)
 	SetEdgeTable(A->arity, A->nodes, i-j, Cnodes, TC, _buf);
 }
 
-bool GeneralFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
+bool GeneralFactorType::PrepareFactor(Energy::NonSingletonFactor*)
 {
 	return true;
 }

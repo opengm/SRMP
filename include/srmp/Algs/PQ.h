@@ -38,15 +38,15 @@ public:
 		REAL	slack;
 
 		Item*	parentPQ;
-		union
+		union Children
 		{
-			struct
+			struct Direction
 			{
 				Item*	leftPQ;
 				Item*	rightPQ;
-			};
+			} direction;
 			REAL	y_saved; // used in repairs
-		};
+		} children;
 	};
 	static void* AllocateBuf();
 	static void DeallocateBuf(void* buf);
@@ -60,7 +60,7 @@ public:
 	void Add(Item* i);
 #define SRMP_Remove(i, buf) _Remove(i)
 	void _Remove(Item* i);
-	void Decrease(Item* i_old, Item* i_new, void* buf);
+	void Decrease(Item* i_old, Item* i_new/*, void* buf*/);
 	Item* GetMin();
 
 	//////////////////////////////////////////////////////////
@@ -139,47 +139,47 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 	{\
 		if (i->slack <= j->slack)\
 		{\
-			j->rightPQ = i->leftPQ;\
-			if (j->rightPQ) j->rightPQ->parentPQ = j;\
+			j->children.direction.rightPQ = i->children.direction.leftPQ;\
+			if (j->children.direction.rightPQ) j->children.direction.rightPQ->parentPQ = j;\
 			j->parentPQ = i;\
-			i->leftPQ = j;\
+			i->children.direction.leftPQ = j;\
 		}\
 		else\
 		{\
-			i->rightPQ = j->leftPQ;\
-			if (i->rightPQ) i->rightPQ->parentPQ = i;\
+			i->children.direction.rightPQ = j->children.direction.leftPQ;\
+			if (i->children.direction.rightPQ) i->children.direction.rightPQ->parentPQ = i;\
 			i->parentPQ = j;\
-			j->leftPQ = i;\
+			j->children.direction.leftPQ = i;\
 			i = j;\
 		}\
 	}
 
 template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 {
-	Item* i = rootPQ->leftPQ;
+	Item* i = rootPQ->children.direction.leftPQ;
 	rootPQ->parentPQ = NULL;
 	if (i)
 	{
 #ifdef SRMP_PQ_MULTIPASS
-		while ( i->rightPQ )
+		while ( i->children.direction.rightPQ )
 		{
 			Item** prev_ptr = &rootPQ;
 			while ( 1 )
 			{
-				if (i->rightPQ)
+				if (i->children.direction.rightPQ)
 				{
-					Item* j = i->rightPQ;
-					Item* next = j->rightPQ;
+					Item* j = i->children.direction.rightPQ;
+					Item* next = j->children.direction.rightPQ;
 					SRMP_MERGE_PQ(i, j);
 					*prev_ptr = i;
-					if (!next) { i->rightPQ = NULL; break; }
-					prev_ptr = &i->rightPQ;
+					if (!next) { i->children.direction.rightPQ = NULL; break; }
+					prev_ptr = &i->children.direction.rightPQ;
 					i = next;
 				}
 				else
 				{
 					*prev_ptr = i;
-					i->rightPQ = NULL;
+					i->children.direction.rightPQ = NULL;
 					break;
 				}
 			}
@@ -188,20 +188,20 @@ template <typename REAL> inline void PriorityQueue<REAL>::RemoveRoot()
 #endif
 
 #ifdef SRMP_PQ_INTERLEAVED_MULTIPASS
-		while ( i->rightPQ )
+		while ( i->children.direction.rightPQ )
 		{
 			Item* prev = NULL;
 			while ( i )
 			{
 				Item* next;
-				if (i->rightPQ)
+				if (i->children.direction.rightPQ)
 				{
-					Item* j = i->rightPQ;
-					next = j->rightPQ;
+					Item* j = i->children.direction.rightPQ;
+					next = j->children.direction.rightPQ;
 					SRMP_MERGE_PQ(i, j);
 				}
 				else next = NULL;
-				i->rightPQ = prev;
+				i->children.direction.rightPQ = prev;
 				prev = i;
 				i = next;
 			}
@@ -219,22 +219,22 @@ template <typename REAL> inline void PriorityQueue<REAL>::Add(Item* i)
 	{
 		rootPQ = i;
 		i->parentPQ = i;
-		i->leftPQ = i->rightPQ = NULL;
+		i->children.direction.leftPQ = i->children.direction.rightPQ = NULL;
 	}
 	else if (i->slack <= rootPQ->slack)
 	{
 		rootPQ->parentPQ = i;
-		i->leftPQ = rootPQ;
-		i->rightPQ = NULL;
+		i->children.direction.leftPQ = rootPQ;
+		i->children.direction.rightPQ = NULL;
 		rootPQ = i;
 		i->parentPQ = i;
 	}
 	else
 	{
-		i->leftPQ = NULL;
-		i->rightPQ = rootPQ->leftPQ;
-		if (i->rightPQ) i->rightPQ->parentPQ = i;
-		rootPQ->leftPQ = i;
+		i->children.direction.leftPQ = NULL;
+		i->children.direction.rightPQ = rootPQ->children.direction.leftPQ;
+		if (i->children.direction.rightPQ) i->children.direction.rightPQ->parentPQ = i;
+		rootPQ->children.direction.leftPQ = i;
 		i->parentPQ = rootPQ;
 	}
 }
@@ -246,13 +246,13 @@ template <typename REAL> inline void PriorityQueue<REAL>::_Remove(Item* i)
 	if (p == i) RemoveRoot();
 	else
 	{
-		if (i->rightPQ) i->rightPQ->parentPQ = p;
-		if (p->leftPQ == i) p->leftPQ  = i->rightPQ;
-		else                p->rightPQ = i->rightPQ;
-		if (i->leftPQ)
+		if (i->children.direction.rightPQ) i->children.direction.rightPQ->parentPQ = p;
+		if (p->children.direction.leftPQ == i) p->children.direction.leftPQ  = i->children.direction.rightPQ;
+		else                p->children.direction.rightPQ = i->children.direction.rightPQ;
+		if (i->children.direction.leftPQ)
 		{
 			i->parentPQ = i;
-			i->rightPQ = NULL;
+			i->children.direction.rightPQ = NULL;
 			PriorityQueue<REAL> pq;
 			pq.rootPQ = i;
 			pq.RemoveRoot();
@@ -262,7 +262,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::_Remove(Item* i)
 	}
 }
 
-template <typename REAL> inline void PriorityQueue<REAL>::Decrease(Item* i_old, Item* i_new, void* _buf)
+template <typename REAL> inline void PriorityQueue<REAL>::Decrease(Item* i_old, Item* i_new/*, void* _buf*/)
 {
 	if (i_old->parentPQ == i_old)
 	{
@@ -270,9 +270,9 @@ template <typename REAL> inline void PriorityQueue<REAL>::Decrease(Item* i_old, 
 		{
 			rootPQ = i_new;
 			i_new->parentPQ = i_new;
-			i_new->leftPQ = i_old->leftPQ;
-			i_new->rightPQ = NULL;
-			if (i_new->leftPQ) i_new->leftPQ->parentPQ = i_new;
+			i_new->children.direction.leftPQ = i_old->children.direction.leftPQ;
+			i_new->children.direction.rightPQ = NULL;
+			if (i_new->children.direction.leftPQ) i_new->children.direction.leftPQ->parentPQ = i_new;
 			i_old->parentPQ = NULL;
 		}
 	}
@@ -304,10 +304,10 @@ template <typename REAL> inline void PriorityQueue<REAL>::Merge(PriorityQueue<RE
 		{
 			Item* j = rootPQ; rootPQ = dest.rootPQ; dest.rootPQ = j;
 		}
-		rootPQ->rightPQ = dest.rootPQ->leftPQ;
-		if (rootPQ->rightPQ) rootPQ->rightPQ->parentPQ = rootPQ;
+		rootPQ->children.direction.rightPQ = dest.rootPQ->children.direction.leftPQ;
+		if (rootPQ->children.direction.rightPQ) rootPQ->children.direction.rightPQ->parentPQ = rootPQ;
 		rootPQ->parentPQ = dest.rootPQ;
-		dest.rootPQ->leftPQ = rootPQ;
+		dest.rootPQ->children.direction.leftPQ = rootPQ;
 	}
 	rootPQ = NULL;
 }
@@ -319,16 +319,16 @@ template <typename REAL> inline void PriorityQueue<REAL>::Update(REAL delta)
 	if (!rootPQ) return;
 
 	Item* i = rootPQ;
-	while (i->leftPQ) i = i->leftPQ;
+	while (i->children.direction.leftPQ) i = i->children.direction.leftPQ;
 
 	while ( 1 )
 	{
 		i->slack += delta;
 
-		if (i->rightPQ)
+		if (i->children.direction.rightPQ)
 		{
-			i = i->rightPQ;
-			while (i->leftPQ) i = i->leftPQ;
+			i = i->children.direction.rightPQ;
+			while (i->children.direction.leftPQ) i = i->children.direction.leftPQ;
 		}
 		else
 		{
@@ -337,7 +337,7 @@ template <typename REAL> inline void PriorityQueue<REAL>::Update(REAL delta)
 				Item* j = i;
 				i = i->parentPQ;
 				if (i == j) return;
-				if (i->leftPQ == j) break;
+				if (i->children.direction.leftPQ == j) break;
 			}
 		}
 	}
@@ -359,13 +359,13 @@ template <typename REAL> inline typename PriorityQueue<REAL>::Item* PriorityQueu
 	if (!rootPQ) return NULL;
 	Item* result = rootPQ;
 	result->parentPQ = NULL;
-	Item* i = rootPQ->leftPQ;
-	if (!i) rootPQ = result->rightPQ;
+	Item* i = rootPQ->children.direction.leftPQ;
+	if (!i) rootPQ = result->children.direction.rightPQ;
 	else
 	{
 		rootPQ = i;
-		while (i->rightPQ) i = i->rightPQ;
-		i->rightPQ = result->rightPQ;
+		while (i->children.direction.rightPQ) i = i->children.direction.rightPQ;
+		i->children.direction.rightPQ = result->children.direction.rightPQ;
 	}
 	return result;
 }
@@ -374,16 +374,16 @@ template <typename REAL> inline typename PriorityQueue<REAL>::Item* PriorityQueu
 {
 	if (!rootPQ) return NULL;
 	Item* i = rootPQ;
-	while (i->leftPQ) i = i->leftPQ;
+	while (i->children.direction.leftPQ) i = i->children.direction.leftPQ;
 	return i;
 }
 
 template <typename REAL> inline typename PriorityQueue<REAL>::Item* PriorityQueue<REAL>::GetNext(Item* i)
 {
-	if (i->rightPQ)
+	if (i->children.direction.rightPQ)
 	{
-		i = i->rightPQ;
-		while (i->leftPQ) i = i->leftPQ;
+		i = i->children.direction.rightPQ;
+		while (i->children.direction.leftPQ) i = i->children.direction.leftPQ;
 		return i;
 	}
 	while ( 1 )
@@ -391,7 +391,7 @@ template <typename REAL> inline typename PriorityQueue<REAL>::Item* PriorityQueu
 		Item* j = i;
 		i = i->parentPQ;
 		if (i == j) return NULL;
-		if (i->leftPQ == j) return i;
+		if (i->children.direction.leftPQ == j) return i;
 	}
 }
 

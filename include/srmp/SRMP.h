@@ -80,7 +80,7 @@ public:
 	//
 	// Use 'type' for custom factor types; see examples in PottsType.h, PatternType.h and SharedPairwiseType.h.
 	// The meaning of pointer 'costs' may be different for custom types (and the same for 'flags')
-	FactorId AddFactor(int arity, NodeId* node_indexes, double* costs, FactorType* type = NULL, unsigned flags = 0);
+	FactorId AddFactor(int arity, NodeId* node_indexes, double* costs, FactorType* type = NULL/*, unsigned flags = 0*/);
 
 	int GetNodeNum() const { return node_num; }
 	int GetK(NodeId i) const { return nodes[i].K; }

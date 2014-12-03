@@ -630,7 +630,7 @@ void Energy::SetFullEdges(int method)
 	NonSingletonFactorOrderedList L(arity_max);
 	UnionFind U;
 	NonSingletonFactor* A;
-	Factor* B;
+	Factor* B = NULL;
 	Edge* e;
 	int r;
 

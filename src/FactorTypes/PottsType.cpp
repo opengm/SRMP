@@ -30,7 +30,7 @@ PottsFactorType::~PottsFactorType()
 {
 }
 
-void PottsFactorType::InitFactor(Energy::NonSingletonFactor* A, double* user_data, unsigned flags)
+void PottsFactorType::InitFactor(Energy::NonSingletonFactor* A, double* user_data, unsigned)
 {
 	if (A->arity != 2 || A->nodes[0]->K != A->nodes[1]->K || *user_data < 0)
 	{
@@ -46,7 +46,7 @@ double PottsFactorType::GetCost(Energy::NonSingletonFactor* A)
 	return (A->nodes[1]->solution == A->nodes[0]->solution) ? 0 : (*A->data);
 }
 
-void PottsFactorType::InitEdge(Energy::Edge* e)
+void PottsFactorType::InitEdge(Energy::Edge*)
 {
 }
 
@@ -58,7 +58,7 @@ bool PottsFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
 	return true;
 }
 
-void PottsFactorType::ComputePartialReparameterization(Energy::NonSingletonFactor* A, double* theta)
+void PottsFactorType::ComputePartialReparameterization(Energy::NonSingletonFactor*, double*)
 {
 	// this function should never be called since incoming edges are not allowed (as specified in PrepareFactor())
 	printf("Error: ComputePartialReparameterization() should not be called for this type. (Trying to save non-standard factor?");

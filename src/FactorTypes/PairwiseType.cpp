@@ -62,7 +62,7 @@ void PairwiseFactorType::InitEdge(Energy::Edge* e)
 	else                                    e->SRMP_WHICH_NODE = 1;
 }
 
-bool PairwiseFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
+bool PairwiseFactorType::PrepareFactor(Energy::NonSingletonFactor*)
 {
 	return true;
 }

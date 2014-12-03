@@ -52,6 +52,8 @@ double SharedPairwiseFactorType::GetCost(Energy::NonSingletonFactor* A)
 
 void SharedPairwiseFactorType::InitEdge(Energy::Edge* e)
 {
+    (void)e; // fix unused variable compiler warning if build with NDEBUG defined
+
 	//Energy::NonSingletonFactor* A = e->A;
 
 	//assert (!A->first_out->next_out // single outgoing edge
@@ -60,7 +62,7 @@ void SharedPairwiseFactorType::InitEdge(Energy::Edge* e)
         || (!e->A->first_out->next_out->next_out && e->A->first_out->B != e->A->first_out->next_out->B) ); // two outgoing edges to different nodes
 }
 
-bool SharedPairwiseFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
+bool SharedPairwiseFactorType::PrepareFactor(Energy::NonSingletonFactor*)
 {
 	return true;
 }
@@ -226,7 +228,7 @@ void SharedPairwiseFactorType::SendRestrictedMessage(Energy::Edge* e)
 
 
 
-double SharedPairwiseFactorType::SendMPLPMessages(Energy::NonSingletonFactor* A, bool set_solution)
+double SharedPairwiseFactorType::SendMPLPMessages(Energy::NonSingletonFactor*, bool)
 {
 	printf("SharedPairwiseFactorType::SendMPLPMessages() is not implemented\n");
 	exit(1);

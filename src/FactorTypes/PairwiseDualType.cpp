@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <assert.h>
+#include <limits>
 #include <srmp/FactorTypes/PairwiseDualType.h>
 #include <srmp/FactorTypes/GeneralType.h>
 #include <srmp/Algs/util.h>
@@ -55,7 +56,7 @@ PairwiseDualFactorType::~PairwiseDualFactorType()
 {
 }
 
-void PairwiseDualFactorType::InitFactor(Energy::NonSingletonFactor* A, double* user_data, unsigned flags)
+void PairwiseDualFactorType::InitFactor(Energy::NonSingletonFactor* A, double* user_data, unsigned)
 {
 	//Energy::Edge* e[2] = { ((Energy::Edge**)user_data)[0], ((Energy::Edge**)user_data)[1] };
 	assert(A->arity == 2);
@@ -109,7 +110,7 @@ bool PairwiseDualFactorType::PrepareFactor(Energy::NonSingletonFactor* A)
 	return true;
 }
 
-void PairwiseDualFactorType::ComputePartialReparameterization(Energy::NonSingletonFactor* A, double* theta)
+void PairwiseDualFactorType::ComputePartialReparameterization(Energy::NonSingletonFactor*, double*)
 {
 	// this function should never be called since incoming edges are not allowed (as specified in PrepareFactor())
 	printf("Error: ComputePartialReparameterization() should not be called for this type. (Trying to save non-standard factor?");
@@ -127,7 +128,7 @@ double PairwiseDualFactorType::SendMessage(Energy::Edge* e0)
 	Energy::Factor* B = eA->B;
 	Energy::Edge* e0_rev = (AC->first_out == e0) ? e0->next_out : AC->first_out;
 	int a, b, c;
-	double delta;
+	double delta = std::numeric_limits<double>::infinity();
 	double* theta = (double*) rbuf.Alloc(B->K*sizeof(double));
 
 	int* TA = (int*) eA->send_message_data;

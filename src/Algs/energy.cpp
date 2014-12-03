@@ -81,7 +81,7 @@ Energy::FactorId Energy::AddPairwiseFactor(NodeId _i, NodeId _j, double* costs)
 	return AddFactor(2, node_indexes, costs);
 }
 
-Energy::FactorId Energy::AddFactor(int arity, NodeId* node_indexes, double* costs, FactorType* type, unsigned flags)
+Energy::FactorId Energy::AddFactor(int arity, NodeId* node_indexes, double* costs, FactorType* type/*, unsigned flags*/)
 {
 	if (arity == 1) return AddUnaryFactor(node_indexes[0], costs);
 
